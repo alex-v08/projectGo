@@ -4,7 +4,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"go-fundamental/projectGO/Projectuser/internal/domain"
 	"net/http"
 )
 
@@ -29,12 +28,12 @@ func MakeEndpoints(ctx context.Context, s Service) Controller {
 			GetAllUsers(ctx, s, w)
 		case http.MethodPost:
 			decode := json.NewDecoder(r.Body)
-			var user domain.User
-			if err := decode.Decode(&user); err != nil {
+			var req CreateReq
+			if err := decode.Decode(&req); err != nil {
 				MsgResponse(w, http.StatusBadRequest, "Bad Request")
 				return
 			}
-			PostUser(ctx, s, w, user)
+			PostUser(ctx, s, w, req)
 
 		default:
 			MsgResponse(w, http.StatusMethodNotAllowed, "Method Not Allowed")

@@ -43,5 +43,6 @@ func (s service) GetAllUsers(ctx context.Context) ([]domain.User, error) {
 	if err != nil {
 		return nil, err
 	}
+	s.log.Println("service got all users")
 	return users, nil
 }
